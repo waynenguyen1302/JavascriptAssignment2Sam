@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+  <h1>Welcome to the Dashboard, {{user.username}}!</h1>
+
+  <h2>Create Team</h2>
+  <form action="/teams" method="POST">
+    <input type="text" name="teamName" placeholder="Team Name">
+    <button type="submit">Create</button>
+  </form>
+
+  <h2>Players</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Salary</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each players}}
+      <tr>
+        <td>{{name}}</td>
+        <td>{{position}}</td>
+        <td>{{salary}}</td>
+        <td>
+          <form action="/players/{{_id}}/edit" method="GET">
+            <button type="submit">Edit</button>
+          </form>
+        </td>
+        <td>
+          <form action="/players/{{_id}}/delete" method="POST">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</body>
+</html>
