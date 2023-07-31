@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const Handlebars = require("handlebars");
 const fs = require('fs');
 const path = require('path');
-const passport = require('passport');
-const GitHubStrategy = require('passport-github2').Strategy;
+// const passport = require('passport');
+// const GitHubStrategy = require('passport-github2').Strategy;
 
 const config = require('./config'); 
 const authRoutes = require('./routes/authRoutes');
@@ -16,35 +16,35 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const app = express();
 const port = 3000;
 
-// Initialize Passport.js
-app.use(passport.initialize());
-app.use(passport.session());
+// // Initialize Passport.js
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-// Serialize and deserialize user (required for session support)
-passport.serializeUser((user, done) => done(null, user));
-passport.deserializeUser((obj, done) => done(null, obj));
+// // Serialize and deserialize user (required for session support)
+// passport.serializeUser((user, done) => done(null, user));
+// passport.deserializeUser((obj, done) => done(null, obj));
 
 
-const GITHUB_CLIENT_ID = '';
-const GITHUB_CLIENT_SECRET = '';
-const CALLBACK_URL = 'http://your-domain.com/auth/github/callback';
+// const GITHUB_CLIENT_ID = '';
+// const GITHUB_CLIENT_SECRET = '';
+// const CALLBACK_URL = 'http://your-domain.com/auth/github/callback';
 
-// Configure GitHub strategy
-passport.use(new GitHubStrategy({
-  clientID: GITHUB_CLIENT_ID,
-  clientSecret: GITHUB_CLIENT_SECRET,
-  callbackURL: CALLBACK_URL
-}, (accessToken, refreshToken, profile, done) => {
-  return done(null, profile);
-}));
+// // // Configure GitHub strategy
+// passport.use(new GitHubStrategy({
+//   clientID: GITHUB_CLIENT_ID,
+//   clientSecret: GITHUB_CLIENT_SECRET,
+//   callbackURL: CALLBACK_URL
+// }, (accessToken, refreshToken, profile, done) => {
+//   return done(null, profile);
+// }));
 
-// Create an endpoint for starting the GitHub authentication
-app.get('/auth/github', passport.authenticate('github'));
+// // Create an endpoint for starting the GitHub authentication
+// app.get('/auth/github', passport.authenticate('github'));
 
-app.get('/auth/github/callback', passport.authenticate('github', {
-  failureRedirect: '/login', 
-  successRedirect: '/dashboard'
-}));
+// app.get('/auth/github/callback', passport.authenticate('github', {
+//   failureRedirect: '/login', 
+//   successRedirect: '/dashboard'
+// }));
 
 // Connect to MongoDB
 mongoose.connect(`mongodb+srv://${config.username}:${config.password}@sjacksonjavascript.llzbx5b.mongodb.net/${config.database}`, {
