@@ -1,42 +1,31 @@
 const express = require('express');
 const router = express.Router();
+const Team = require('../models/Team');
 
-// Create a player
-router.post('/players', async (req, res) => {
-  const { name, position, salary } = req.body;
-
-  try {
-    // Save the player to the database
-    // Code for saving the player goes here
-    req.flash('success', 'Player created successfully');
-    res.redirect('/dashboard');
-  } catch (error) {
-    req.flash('error', 'Failed to create player');
-    res.redirect('/dashboard');
-  }
-});
-
-// Edit a player
-router.get('/players/:id/edit', async (req, res) => {
-  const { id } = req.params;
+router.get('/teams/:teamId/players/:playerId/edit', async (req, res) => {
+  const { teamId, playerId } = req.params;
 
   try {
-    // Fetch the player from the database
-    // Code for fetching the player goes here
-    res.render('edit-player', { player });
+    const team = await Team.findOne({ _id: teamId, user: req.session.user._id });
+    const player = team.players.id(playerId);
+    res.render('edit-player', { team, player });
   } catch (error) {
     req.flash('error', 'Failed to find player');
     res.redirect('/dashboard');
   }
 });
 
-router.post('/players/:id/edit', async (req, res) => {
-  const { id } = req.params;
+router.post('/teams/:teamId/players/:playerId/edit', async (req, res) => {
+  const { teamId, playerId } = req.params;
   const { name, position, salary } = req.body;
 
   try {
-    // Update the player in the database
-    // Code for updating the player goes here
+    const team = await Team.findOne({ _id: teamId, user: req.session.user._id });
+    const player = team.players.id(playerId);
+    player.name = name;
+    player.position = position;
+    player.salary = salary;
+    await team.save();
     req.flash('success', 'Player updated successfully');
     res.redirect('/dashboard');
   } catch (error) {
@@ -45,13 +34,25 @@ router.post('/players/:id/edit', async (req, res) => {
   }
 });
 
-// Delete a player
-router.post('/players/:id/delete', async (req, res) => {
-  const { id } = req.params;
+
+router.post('/teams/:teamId/players/:playerId/delete', async (req, res) => {
+  if (!req.session.user) {
+    req.flash('error', 'You need to log in first');
+    return res.redirect('/login');
+  }
+
+  const { teamId, playerId } = req.params;
 
   try {
-    // Delete the player from the database
-    // Code for deleting the player goes here
+    const team = await Team.findById(teamId);
+    if (!team) {
+      req.flash('error', 'Team not found');
+      return res.redirect('/dashboard');
+    }
+
+    team.players.id(playerId).remove();
+    await team.save();
+
     req.flash('success', 'Player deleted successfully');
     res.redirect('/dashboard');
   } catch (error) {

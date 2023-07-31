@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Assignment 4: Fantasy Hockey World - Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+  {{> global-header}}
+  <h1>Team: {{team.name}}</h1>
+
+  <h2>Add Player</h2>
+  <form action="/teams/{{team._id}}/players" method="POST">
+    <input type="text" name="name" placeholder="Name">
+    <input type="text" name="position" placeholder="Position">
+    <input type="number" name="salary" placeholder="Salary">
+    <button type="submit">Add</button>
+  </form>
+
+  <h2>Players</h2>
+  {{#if team.players.length}}
+    <ul>
+      {{#each team.players}}
+        <li>
+          Name: {{this.name}}, Position: {{this.position}}, Salary: {{this.salary}}
+          <form action="/teams/{{team._id}}/players/{{this._id}}/edit" method="GET" style="display: inline-block;">
+            <button type="submit">Edit</button>
+          </form>
+          <form action="/teams/{{team._id}}/players/{{this._id}}/delete" method="POST" style="display: inline-block;">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>No players found in this team.</p>
+  {{/if}}
+
+  <a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>

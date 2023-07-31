@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dashboard</title>
+  <title>Assignment 4: Fantasy Hockey World - Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+  {{> global-header}}
   <h1>Welcome to the Dashboard, {{user.username}}!</h1>
 
   <h2>Create Team</h2>
@@ -12,36 +14,66 @@
     <button type="submit">Create</button>
   </form>
 
-  <h2>Players</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Position</th>
-        <th>Salary</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each players}}
-      <tr>
-        <td>{{name}}</td>
-        <td>{{position}}</td>
-        <td>{{salary}}</td>
-        <td>
-          <form action="/players/{{_id}}/edit" method="GET">
-            <button type="submit">Edit</button>
-          </form>
-        </td>
-        <td>
-          <form action="/players/{{_id}}/delete" method="POST">
+  <h2>My Teams</h2>
+  {{#if teams.length}}
+    <ul>
+      {{#each teams}}
+        <li class="list-group teams">
+          {{this.name}}
+          <form action="/teams/{{this._id}}/delete" method="POST" style="display: inline-block;">
             <button type="submit">Delete</button>
           </form>
-        </td>
-      </tr>
+
+          <h4>Add Player</h4>
+          <form action="/teams/{{this._id}}/players" method="POST">
+            <input type="hidden" name="teamId" value="{{this._id}}">
+            <input type="text" name="name" placeholder="Player Name">
+            <input type="text" name="position" placeholder="Player Position">
+            <input type="number" name="salary" placeholder="Player Salary">
+            <button type="submit">Add Player</button>
+          </form>
+
+          <h4>Players</h4>
+          {{#if this.players.length}}
+            <table class="table table-dark">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Salary</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each this.players}}
+                  <tr>
+                    <td>{{this.name}}</td>
+                    <td>{{this.position}}</td>
+                    <td>{{this.salary}}</td>
+                    <td>
+                      <form action="/teams/{{../this._id}}/players/{{this._id}}/edit" method="GET" style="display: inline-block;">
+                        <button type="submit">Edit</button>
+                      </form>
+                    </td>
+                    <!-- <td>
+                      <form action="/teams/{{../this._id}}/players/{{this._id}}/delete" method="POST" style="display: inline-block;">
+                        <input type="hidden" name="confirmDelete" value="true">
+                        <button type="submit">Delete</button>
+                      </form>
+                    </td> -->
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          {{else}}
+            <p>No players found in this team.</p>
+          {{/if}}
+        </li>
       {{/each}}
-    </tbody>
-  </table>
+    </ul>
+  {{else}}
+    <p>No teams found.</p>
+  {{/if}}
 </body>
 </html>

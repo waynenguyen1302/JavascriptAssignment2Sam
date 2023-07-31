@@ -1,37 +1,108 @@
-@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css');
+/* Style.css */
+/* Sam Jackson */
+/* Assignment 2b */
 
 body {
-  padding: 20px;
-}
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #f8f9fa;
+    padding: 10px;
+  }
+  
+  .navbar {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .navbar-nav .nav-item {
+    margin-right: 10px;
+  }
+  
+  h1 {
+    margin-top: 20px;
+  }
+  
+  h2 {
+    margin-top: 30px;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"],
+  input[type="number"] {
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+  }
+  
+  button[type="submit"] {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  li {
+    margin-bottom: 20px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  a {
+    display: block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+  }
 
-h1, h2, h3 {
-  margin-top: 30px;
-}
+  main.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 50px);
+    background-color: #f2f2f2;
+  }
+  
+  main.home h1 {
+    font-size: 36px;
+    color: #007bff;
+    text-align: center;
+  }
+  
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+  body.dashboard {
+    background-color: #007bff;
+    color: #fff;
+  }
 
-th, td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-form {
-  margin-bottom: 10px;
-}
-
-button[type="submit"] {
-  margin-top: 5px;
-}
-
-a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
+  

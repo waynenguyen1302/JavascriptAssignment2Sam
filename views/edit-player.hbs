@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Assignment 4: Fantasy Hockey World - Edit Player</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+  {{> global-header}}
+
+  <h1>Edit Player</h1>
+
+  <form action="/teams/{{team._id}}/players/{{player._id}}/edit" method="POST">
+    <input type="text" name="name" placeholder="Name" value="{{player.name}}">
+    <input type="text" name="position" placeholder="Position" value="{{player.position}}">
+    <input type="number" name="salary" placeholder="Salary" value="{{player.salary}}">
+    <button type="submit">Save</button>
+  </form>
+
+  <a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>
