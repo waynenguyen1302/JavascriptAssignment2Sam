@@ -5,7 +5,6 @@ const Team = require('../models/Team');
 // Create a team
 router.post('/teams', async (req, res) => {
   const { teamName } = req.body;
-
   try {
     const newTeam = await Team.create({ name: teamName, user: req.session.user._id });
     req.flash('success', 'Team created successfully');
