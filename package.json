@@ -6,9 +6,6 @@
   "engines": {
     "node": "16.x"
   },
-  "scripts": {
-    "test": "mocha"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
