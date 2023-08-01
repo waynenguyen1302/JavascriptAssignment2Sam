@@ -32,14 +32,15 @@
     </div>
     <h1>Welcome Guest</h1>
 
-    <h2>My Teams</h2>
-    {{#if teams.length}}
-     <ul>
-        {{#each teams}}
-   </ul>
-        {{/each}}
+    <h2>Users List</h2>
+    {{#if users.length}}
+        <ul>
+            {{#each users}}
+                <li>{{this.username}}</li>
+            {{/each}}
+        </ul>
     {{else}}
-        <p>No teams found.</p>
+        <p>No users found.</p>
     {{/if}}
     </body>
 </html>

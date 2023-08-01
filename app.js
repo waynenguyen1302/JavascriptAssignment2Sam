@@ -4,7 +4,7 @@ const flash = require('express-flash');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
-
+const User = require('./models/User');
 const config = require('./config');
 const authRoutes = require('./routes/authRoutes');
 const teamRoutes = require('./routes/teams');
@@ -73,11 +73,10 @@ app.get('/dashboard', (req, res) => {
 
 app.get('/publicview', async (req, res) => {
   try {
-    const userID = '64c82a76a3b01fd3fcd72f53';
-    const teams = await Team.find({ user: userID });
-    res.render('publicview', { teams });
+    const users = await User.find({});
+    res.render('publicview', { users });
   } catch (error) {
-    req.flash('error', 'Failed to fetch teams');
+    req.flash('error', 'Failed to fetch users');
     res.redirect('/');
   }
 });
