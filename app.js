@@ -2,20 +2,16 @@ const express = require('express');
 const session = require('express-session');
 const flash = require('express-flash');
 const mongoose = require('mongoose');
-const Handlebars = require("handlebars");
-const fs = require('fs');
-const path = require('path');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
 
-const config = require('./config'); 
+const config = require('./config');
 const authRoutes = require('./routes/authRoutes');
 const teamRoutes = require('./routes/teams');
 const playerRoutes = require('./routes/players');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const app = express();
 const port = 3000;
-
 
 const GITHUB_CLIENT_ID = 'Iv1.54cd81750548ab94';
 const GITHUB_SECRET_KEY = 'c2b4cc5f4bd4c5f0d69dd363ee65e91da2659f3c';
@@ -32,21 +28,19 @@ mongoose.connect(`mongodb+srv://${config.username}:${config.password}@sjacksonja
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  secret: 'secret-key', 
+  secret: 'secret-key',
   resave: false,
   saveUninitialized: false
 }));
-
 
 app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
-
 passport.use(new GitHubStrategy({
   clientID: GITHUB_CLIENT_ID,
-  clientSecret:  GITHUB_SECRET_KEY,
+  clientSecret: GITHUB_SECRET_KEY,
   callbackURL: CALLBACK_URL
 }, (accessToken, refreshToken, profile, done) => {
   return done(null, profile);
@@ -55,10 +49,9 @@ passport.use(new GitHubStrategy({
 app.get('/auth/github', passport.authenticate('github'));
 
 app.get('/auth/github/callback', passport.authenticate('github', {
-  failureRedirect: '/login', 
+  failureRedirect: '/login',
   successRedirect: '/dashboard'
 }));
-
 
 app.use(flash());
 
@@ -75,10 +68,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/dashboard', (req, res) => {
-  res.render('dashboard'); 
-});
-app.get('/publicview', (req, res) => {
-  res.render('publicview'); 
+  res.render('dashboard');
 });
 
 app.get('/publicview', async (req, res) => {
