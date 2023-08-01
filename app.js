@@ -15,7 +15,8 @@ const port = 3000;
 
 const GITHUB_CLIENT_ID = 'Iv1.54cd81750548ab94';
 const GITHUB_SECRET_KEY = 'c2b4cc5f4bd4c5f0d69dd363ee65e91da2659f3c';
-const CALLBACK_URL = 'localhost:3000/auth/github/callback'; // 'https://myfantasyhockeyapp.azurewebsites.net/auth/github/callback';
+//const CALLBACK_URL = 'localhost:3000/auth/github/callback';  
+const CALLBACK_URL = 'https://myfantasyhockeyapp2.azurewebsites.net/auth/github/callback';
 
 // Connect to MongoDB
 mongoose.connect(`mongodb+srv://${config.username}:${config.password}@sjacksonjavascript.llzbx5b.mongodb.net/${config.database}`, {
