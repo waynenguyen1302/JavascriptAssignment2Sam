@@ -20,6 +20,9 @@
                 <a class="nav-link" href="/dashboard">Dashboard</a>
                 </li>
                 <li class="nav-item">
+                <a class="nav-link" href="/publicview">Public View</a>
+                </li>
+                <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
                 </li>
             </ul>
@@ -32,7 +35,11 @@
     <h2>My Teams</h2>
     {{#if teams.length}}
      <ul>
-         {{#each teams}}
+        {{#each teams}}
    </ul>
+        {{/each}}
+    {{else}}
+        <p>No teams found.</p>
+    {{/if}}
     </body>
 </html>

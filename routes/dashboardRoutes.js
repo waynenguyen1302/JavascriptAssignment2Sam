@@ -2,8 +2,18 @@ const express = require('express');
 const router = express.Router();
 const Team = require('../models/Team');
 
+// Middleware to check if the user is authenticated
+function requireAuthentication(req, res, next) {
+  if (req.session.user) {
+    return next();
+  } else {
+    req.flash('error', 'You need to log in first');
+    return res.redirect('/login');
+  }
+}
+
 // Dashboard route
-router.get('/dashboard', async (req, res) => {
+router.get('/dashboard', requireAuthentication, async (req, res) => {
   try {
     const teams = await Team.find({ user: req.session.user });
     res.render('dashboard', { teams });
@@ -14,13 +24,7 @@ router.get('/dashboard', async (req, res) => {
 });
 
 // Create team
-router.post('/dashboard/teams', async (req, res) => {
-  // Check if the user is authenticated
-  if (!req.session.user) {
-    req.flash('error', 'You need to log in first');
-    return res.redirect('/login');
-  }
-
+router.post('/dashboard/teams', requireAuthentication, async (req, res) => {
   const { name } = req.body;
   const team = new Team({ name, user: req.session.user });
 
@@ -35,13 +39,7 @@ router.post('/dashboard/teams', async (req, res) => {
 });
 
 // Add player
-router.post('/dashboard/teams/:teamId/players', async (req, res) => {
-  // Check if the user is authenticated
-  if (!req.session.user) {
-    req.flash('error', 'You need to log in first');
-    return res.redirect('/login');
-  }
-
+router.post('/dashboard/teams/:teamId/players', requireAuthentication, async (req, res) => {
   const { teamId } = req.params;
   const { name, position, salary } = req.body;
 
@@ -64,13 +62,7 @@ router.post('/dashboard/teams/:teamId/players', async (req, res) => {
 });
 
 // Update player
-router.post('/dashboard/teams/:teamId/players/:playerId/update', async (req, res) => {
-  // Check if the user is authenticated
-  if (!req.session.user) {
-    req.flash('error', 'You need to log in first');
-    return res.redirect('/login');
-  }
-
+router.post('/dashboard/teams/:teamId/players/:playerId/update', requireAuthentication, async (req, res) => {
   const { teamId, playerId } = req.params;
   const { name, position, salary } = req.body;
 
@@ -99,35 +91,5 @@ router.post('/dashboard/teams/:teamId/players/:playerId/update', async (req, res
     res.redirect('/dashboard');
   }
 });
-
-// // Delete player
-// router.post('/dashboard/teams/:teamId/players/:playerId/delete', async (req, res) => {
-//   // Check if the user is authenticated
-//   if (!req.session.user) {
-//     req.flash('error', 'You need to log in first');
-//     return res.redirect('/login');
-//   }
-
-//   const { teamId, playerId } = req.params;
-
-//   try {
-//     const team = await Team.findByIdAndUpdate(
-//       teamId,
-//       { $pull: { players: { _id: playerId } } },
-//       { new: true }
-//     );
-
-//     if (!team) {
-//       req.flash('error', 'Team or player not found');
-//       return res.redirect('/dashboard');
-//     }
-
-//     req.flash('success', 'Player deleted successfully');
-//     res.redirect('/dashboard');
-//   } catch (error) {
-//     req.flash('error', 'Failed to delete player');
-//     res.redirect('/dashboard');
-//   }
-// });
 
 module.exports = router;

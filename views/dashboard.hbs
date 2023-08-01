@@ -20,6 +20,9 @@
               <a class="nav-link" href="/dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/publicview">Public View</a>
+                </li>
+            <li class="nav-item">
               <a class="nav-link" href="/logout">Logout</a>
             </li>
           </ul>
@@ -27,7 +30,7 @@
       </nav>
     </header>
   </div>
-  <h1>Welcome to the Dashboard</h1>
+  <h1>Welcome to the Dashboard, {{user.username}}!</h1>
 
   <h2>Create Team</h2>
   <form action="/teams" method="POST">
@@ -36,6 +39,7 @@
   </form>
 
   <h2>My Teams</h2>
+  {{#if teams.length}}
     <ul>
       {{#each teams}}
         <li class="list-group teams">
