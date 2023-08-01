@@ -100,34 +100,34 @@ router.post('/dashboard/teams/:teamId/players/:playerId/update', async (req, res
   }
 });
 
-// Delete player
-router.post('/dashboard/teams/:teamId/players/:playerId/delete', async (req, res) => {
-  // Check if the user is authenticated
-  if (!req.session.user) {
-    req.flash('error', 'You need to log in first');
-    return res.redirect('/login');
-  }
+// // Delete player
+// router.post('/dashboard/teams/:teamId/players/:playerId/delete', async (req, res) => {
+//   // Check if the user is authenticated
+//   if (!req.session.user) {
+//     req.flash('error', 'You need to log in first');
+//     return res.redirect('/login');
+//   }
 
-  const { teamId, playerId } = req.params;
+//   const { teamId, playerId } = req.params;
 
-  try {
-    const team = await Team.findByIdAndUpdate(
-      teamId,
-      { $pull: { players: { _id: playerId } } },
-      { new: true }
-    );
+//   try {
+//     const team = await Team.findByIdAndUpdate(
+//       teamId,
+//       { $pull: { players: { _id: playerId } } },
+//       { new: true }
+//     );
 
-    if (!team) {
-      req.flash('error', 'Team or player not found');
-      return res.redirect('/dashboard');
-    }
+//     if (!team) {
+//       req.flash('error', 'Team or player not found');
+//       return res.redirect('/dashboard');
+//     }
 
-    req.flash('success', 'Player deleted successfully');
-    res.redirect('/dashboard');
-  } catch (error) {
-    req.flash('error', 'Failed to delete player');
-    res.redirect('/dashboard');
-  }
-});
+//     req.flash('success', 'Player deleted successfully');
+//     res.redirect('/dashboard');
+//   } catch (error) {
+//     req.flash('error', 'Failed to delete player');
+//     res.redirect('/dashboard');
+//   }
+// });
 
 module.exports = router;
