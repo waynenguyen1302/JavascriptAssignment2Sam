@@ -77,6 +77,20 @@ app.get('/', (req, res) => {
 app.get('/dashboard', (req, res) => {
   res.render('dashboard'); 
 });
+app.get('/publicview', (req, res) => {
+  res.render('publicview'); 
+});
+
+app.get('/publicview', async (req, res) => {
+  try {
+    const userID = '64c82a76a3b01fd3fcd72f53';
+    const teams = await Team.find({ user: userID });
+    res.render('publicview', { teams });
+  } catch (error) {
+    req.flash('error', 'Failed to fetch teams');
+    res.redirect('/');
+  }
+});
 
 // Start the server
 app.listen(port, () => {
