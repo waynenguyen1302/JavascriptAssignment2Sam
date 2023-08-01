@@ -32,20 +32,20 @@
   </div>
   <h1>Welcome to the Dashboard, {{user.username}}!</h1>
 
-  <h2>Create Team</h2>
+  <h2 class="text-muted">Create Team</h2>
   <form action="/teams" method="POST">
     <input type="text" name="teamName" placeholder="Team Name">
-    <button type="submit">Create</button>
+    <button class="btn btn-outline-secondary" type="submit">Create</button>
   </form>
 
-  <h2>My Teams</h2>
+  <h2 class="text-muted">My Teams</h2>
   {{#if teams.length}}
     <ul>
       {{#each teams}}
         <li class="list-group teams">
           {{this.name}}
           <form action="/teams/{{this._id}}/delete" method="POST" style="display: inline-block;">
-            <button type="submit">Delete</button>
+            <button class="btn btn-outline-secondary" type="submit">Delete</button>
           </form>
 
           <h4>Add Player</h4>
@@ -54,12 +54,12 @@
             <input type="text" name="name" placeholder="Player Name">
             <input type="text" name="position" placeholder="Player Position">
             <input type="number" name="salary" placeholder="Player Salary">
-            <button type="submit">Add Player</button>
+            <button class="btn btn-outline-secondary"  type="submit">Add Player</button>
           </form>
 
           <h4>Players</h4>
           {{#if this.players.length}}
-            <table class="table table-dark">
+            <table class="table table-success table-striped table-hover">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -77,15 +77,9 @@
                     <td>{{this.salary}}</td>
                     <td>
                       <form action="/teams/{{../this._id}}/players/{{this._id}}/edit" method="GET" style="display: inline-block;">
-                        <button type="submit">Edit</button>
+                        <button class="btn btn-outline-secondary" type="submit">Edit</button>
                       </form>
                     </td>
-                    <!-- <td>
-                      <form action="/teams/{{../this._id}}/players/{{this._id}}/delete" method="POST" style="display: inline-block;">
-                        <input type="hidden" name="confirmDelete" value="true">
-                        <button type="submit">Delete</button>
-                      </form>
-                    </td> -->
                   </tr>
                 {{/each}}
               </tbody>

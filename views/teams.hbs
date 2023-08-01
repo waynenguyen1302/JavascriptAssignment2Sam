@@ -37,7 +37,7 @@
     <input type="text" name="name" placeholder="Name">
     <input type="text" name="position" placeholder="Position">
     <input type="number" name="salary" placeholder="Salary">
-    <button type="submit">Add</button>
+    <button class="btn btn-outline-secondary" type="submit">Add</button>
   </form>
 
   <h2>Players</h2>
@@ -47,10 +47,10 @@
         <li>
           Name: {{this.name}}, Position: {{this.position}}, Salary: {{this.salary}}
           <form action="/teams/{{team._id}}/players/{{this._id}}/edit" method="GET" style="display: inline-block;">
-            <button type="submit">Edit</button>
+            <button class="btn btn-outline-secondary" type="submit">Edit</button>
           </form>
           <form action="/teams/{{team._id}}/players/{{this._id}}/delete" method="POST" style="display: inline-block;">
-            <button type="submit">Delete</button>
+            <button class="btn btn-outline-secondary" type="submit">Delete</button>
           </form>
         </li>
       {{/each}}
