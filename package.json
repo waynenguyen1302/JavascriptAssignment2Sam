@@ -7,7 +7,8 @@
     "node": "16.x"
   },
   "scripts": {
-    "test": "mocha"},
+    "test": "mocha"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -26,5 +27,8 @@
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
     "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0"
   }
 }
